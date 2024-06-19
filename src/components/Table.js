@@ -15,6 +15,8 @@ export default function Table() {
             <td className="font-bold">Amount</td>
           </tr>
         </thead>
+        
+        
         {list.map(({ id, description, quantity, price, amount }) => (
           <tbody key={id}>
             <tr className="h-10">
