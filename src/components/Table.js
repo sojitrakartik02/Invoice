@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { State } from "../context/stateContext";
-import App from "../App";
 
 export default function Table() {
   const { list, total } = useContext(State);
@@ -17,16 +16,14 @@ export default function Table() {
           </tr>
         </thead>
         {list.map(({ id, description, quantity, price, amount }) => (
-          <React.Fragment key={id}>
-            <tbody>
-              <tr className="h-10">
-                <td>{description}</td>
-                <td>{quantity}</td>
-                <td>{price}</td>
-                <td>{amount}</td>
-              </tr>
-            </tbody>
-          </React.Fragment>
+          <tbody key={id}>
+            <tr className="h-10">
+              <td>{description}</td>
+              <td>{quantity}</td>
+              <td>{price}</td>
+              <td>{amount}</td>
+            </tr>
+          </tbody>
         ))}
       </table>
 
@@ -38,5 +35,3 @@ export default function Table() {
     </>
   );
 }
-
-
