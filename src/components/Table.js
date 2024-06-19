@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { State } from "../context/stateContext";
+import App from "../App";
 
 export default function Table() {
   const { list, total } = useContext(State);
@@ -37,3 +38,5 @@ export default function Table() {
     </>
   );
 }
+
+

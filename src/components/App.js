@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import ClientDetails from "./ClientDetails";
 import Dates from "./Dates";
 import Footer from "./Footer";
@@ -10,6 +10,10 @@ import TableForm from "./TableForm";
 import ReactToPrint from "react-to-print";
 import { DonateButton } from "../buttons";
 import { State } from "../context/stateContext";
+import htmlToPdfmake from 'html-to-pdfmake';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function App() {
   const {
@@ -41,6 +45,29 @@ function App() {
     setNotes,
     componentRef,
   } = useContext(State);
+
+  const sendWhatsAppMessage = async () => {
+    const invoiceElement = componentRef.current;
+
+    // Convert the HTML content to PDFMake format
+    const htmlContent = invoiceElement.innerHTML;
+    const pdfMakeContent = htmlToPdfmake(htmlContent);
+
+    // Define the PDF document
+    const docDefinition = {
+      content: pdfMakeContent,
+    };
+
+    // Generate the PDF and trigger a download
+    pdfMake.createPdf(docDefinition).download('invoice.pdf');
+
+    // Notify the user to send the file manually via WhatsApp
+    const whatsappNumber = phone.replace(/\D/g, ''); // Removes any non-digit characters
+    const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Please find the invoice attached.`;
+
+    // Open WhatsApp link
+    window.open(whatsappLink, '_blank');
+  };
 
   return (
     <>
@@ -233,7 +260,6 @@ function App() {
                 </div>
               </article>
 
-              {/* This is our table form */}
               <article>
                 <TableForm />
               </article>
@@ -266,19 +292,20 @@ function App() {
             )}
             content={() => componentRef.current}
           />
+          <button
+            onClick={sendWhatsAppMessage}
+            className="bg-green-500 mt-4 text-white font-bold py-2 px-8 rounded hover:bg-green-600 hover:text-white transition-all duration-150 hover:ring-4 hover:ring-green-400"
+          >
+            Send via WhatsApp
+          </button>
+
           <div ref={componentRef} className="p-5">
             <Header />
-
             <MainDetails />
-
             <ClientDetails />
-
             <Dates />
-
             <Table />
-
             <Notes />
-
             <Footer />
           </div>
         </div>
