@@ -1,3 +1,4 @@
+
 import React, { useContext } from "react";
 import ClientDetails from "./ClientDetails";
 import Dates from "./Dates";
@@ -49,20 +50,21 @@ function App() {
   const sendWhatsAppMessage = async () => {
     const invoiceElement = componentRef.current;
 
-    // Convert the HTML content to PDFMake format
+    
     const htmlContent = invoiceElement.innerHTML;
     const pdfMakeContent = htmlToPdfmake(htmlContent);
 
-    // Define the PDF document
+   
     const docDefinition = {
-      content: pdfMakeContent,
+      content: pdfMakeContent,  
     };
 
-    // Generate the PDF and trigger a download
-    pdfMake.createPdf(docDefinition).download('invoice.pdf');
+   
+   const pdf= pdfMake.createPdf(docDefinition).download('invoice.pdf');
 
-    // Notify the user to send the file manually via WhatsApp
-    const whatsappNumber = phone.replace(/\D/g, ''); // Removes any non-digit characters
+    
+    const whatsappNumber = phone.replace(/\D/g, ''); 
+   
     const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Please find the invoice attached.`;
 
     // Open WhatsApp link
@@ -81,7 +83,7 @@ function App() {
         <section>
           <div className="bg-white p-5 rounded shadow">
             <div className="flex flex-col justify-center">
-              <article className="md:grid grid-cols-2 gap-10">
+              <article className="md:grid  ">
                 <div className="flex flex-col">
                   <label htmlFor="name">Your full name</label>
                   <input
@@ -95,8 +97,10 @@ function App() {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
+             
+          
 
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                   <label htmlFor="address">Enter your address</label>
                   <input
                     type="text"
@@ -108,11 +112,11 @@ function App() {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                   />
-                </div>
+                </div> */}
               </article>
 
-              <article className="md:grid grid-cols-3 gap-10">
-                <div className="flex flex-col">
+              <article className="md:grid ">
+                {/* <div className="flex flex-col">
                   <label htmlFor="email">Enter your email</label>
                   <input
                     type="email"
@@ -138,13 +142,14 @@ function App() {
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                   />
-                </div>
+                </div> */}
 
                 <div className="flex flex-col">
                   <label htmlFor="phone">Enter your phone</label>
                   <input
-                    type="text"
+                    type="number"
                     name="phone"
+                    
                     id="phone"
                     placeholder="Enter your phone"
                     maxLength={12}
@@ -155,7 +160,7 @@ function App() {
                 </div>
               </article>
 
-              <article className="md:grid grid-cols-2 gap-10">
+              {/* <article className="md:grid grid-cols-2 gap-10">
                 <div className="flex flex-col">
                   <label htmlFor="bankName">Enter your bank name</label>
                   <input
@@ -185,9 +190,9 @@ function App() {
                     onChange={(e) => setBankAccount(e.target.value)}
                   />
                 </div>
-              </article>
+              </article> */}
 
-              <article className="md:grid grid-cols-2 gap-10 md:mt-16">
+              <article className="md:grid grid-cols-2 gap-10 ">
                 <div className="flex flex-col">
                   <label htmlFor="clientName">Enter your client's name</label>
                   <input
@@ -264,7 +269,7 @@ function App() {
                 <TableForm />
               </article>
 
-              <label htmlFor="notes">Additional Notes</label>
+              {/* <label htmlFor="notes">Additional Notes</label>
               <textarea
                 name="notes"
                 id="notes"
@@ -274,7 +279,7 @@ function App() {
                 maxLength={500}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-              ></textarea>
+              ></textarea> */}
             </div>
           </div>
           <article className="mt-5">
@@ -286,18 +291,16 @@ function App() {
         <div className="invoice__preview bg-white p-5 rounded-2xl border-4 border-blue-200">
           <ReactToPrint
             trigger={() => (
-              <button className="bg-blue-500 ml-5 text-white font-bold py-2 px-8 rounded hover:bg-blue-600 hover:text-white transition-all duration-150 hover:ring-4 hover:ring-blue-400">
+              <button className="bg-blue-500 ml-5 text-white font-bold py-2 px-8 mx-2 rounded hover:bg-white hover:text-blue-500 transition-all duration-150 hover:ring-4 hover:ring-blue-500">
                 Print / Download
               </button>
             )}
             content={() => componentRef.current}
           />
-          <button
-            onClick={sendWhatsAppMessage}
-            className="bg-green-500 mt-4 text-white font-bold py-2 px-8 rounded hover:bg-green-600 hover:text-white transition-all duration-150 hover:ring-4 hover:ring-green-400"
-          >
-            Send via WhatsApp
-          </button>
+          <button  onClick={sendWhatsAppMessage} className="bg-green-500 text-white mx-2 font-bold py-2 px-8 rounded shadow border-2 border-green-500 hover:bg-transparent hover:text-green-500 transition-all duration-300">
+          Send via WhatsApp
+              </button>
+          
 
           <div ref={componentRef} className="p-5">
             <Header />

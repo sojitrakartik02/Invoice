@@ -28,7 +28,7 @@ export default function TableForm() {
       <ToastContainer position="top-right" theme="colored" />
 
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col md:mt-16">
+        <div className="flex flex-col ">
           <label htmlFor="description">Item description</label>
           <input
             type="text"
@@ -119,7 +119,7 @@ export default function TableForm() {
 
       <div>
         <h2 className="flex items-end justify-end text-gray-800 text-4xl font-bold">
-          Kshs. {total.toLocaleString()}
+          Total. {total.toLocaleString()}
         </h2>
       </div>
     </>
