@@ -60,7 +60,7 @@ function App() {
     };
 
    
-   const pdf= pdfMake.createPdf(docDefinition).download('invoice.pdf');
+    pdfMake.createPdf(docDefinition).download('invoice.pdf');
 
     
     const whatsappNumber = phone.replace(/\D/g, ''); 
